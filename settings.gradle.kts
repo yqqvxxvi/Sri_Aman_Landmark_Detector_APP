@@ -19,6 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "landmarkdetector"
+rootProject.name = "objectdetection"
 include(":app")
- 

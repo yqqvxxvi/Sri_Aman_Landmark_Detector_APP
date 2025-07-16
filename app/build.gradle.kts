@@ -1,16 +1,16 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.example.landmarkdetector"
-    compileSdk = 36
+    namespace = "com.example.objectdetection"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.landmarkdetector"
+        applicationId = "com.example.objectdetection"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -26,32 +26,46 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    // Use androidResources block instead of deprecated aaptOptions
+    androidResources {
+        noCompress += "tflite"
     }
 }
-
 
 dependencies {
-    // Core AndroidX libraries
-    implementation("androidx.core:core-ktx:1.10.1")
+    // Core Android dependencies
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.activity:activity-ktx:1.7.2")
-
-    // TensorFlow Lite
-    implementation("org.tensorflow:tensorflow-lite:2.13.0")
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.13.0")
-    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
 
     // CameraX
-    implementation("androidx.camera:camera-camera2:1.3.0")
-    implementation("androidx.camera:camera-lifecycle:1.3.0")
-    implementation("androidx.camera:camera-view:1.3.0")
-}
+    val cameraxVersion = "1.3.1"
+    implementation("androidx.camera:camera-core:$cameraxVersion")
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
 
+    // TensorFlow Lite
+    implementation("org.tensorflow:tensorflow-lite:2.14.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+
+    // Testing
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
